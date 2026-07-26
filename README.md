@@ -12,8 +12,6 @@
 
 ### Installer les dépendances
     uv add numpy pandas scikit-learn matplotlib jupyter ipykernel kaggle 
-    accelerate datasets
-(à revoir et installer un par un car peut-être que je n'ai plus besoin d'autant de packages à installer)
 
     uv add fastapi "uvicorn[standard]"
 (dépendances pour FastAPI)
@@ -62,9 +60,8 @@ En fait, j'avais essayé d'exécuter les scripts .py mais ça ne marchait pas, d
 
 # Setup les données
 
-- Télécharger kaggle.json et le mettre dans credentials/
-- Lancer le téléchargement du dataset (.zip + décompression) avec la commande :
-uv run data/download.py
+Lancer le téléchargement du dataset (.zip + décompression) avec la commande :
+    uv run data/download.py
 
 # Arborescence du projet
 

@@ -1,0 +1,2 @@
+experiment_group,experiment_name,cv_mean_f1_macro,cv_std_f1_macro,train_f1_macro,validation_f1_macro,validation_no_overlap_f1_macro,train_time_sec,eval_time_sec
+Final model,Linear SVM (+TF-IDF),0.9392835142604566,0.0007597114735056304,0.9787072080838661,0.9878043861399503,0.9797177277492105,7.291338288001498,0.029932389999885345

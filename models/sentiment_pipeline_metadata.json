@@ -1,0 +1,23 @@
+{
+  "model_name": "sentiment_pipeline",
+  "model_type": "LinearSVC",
+  "vectorizer": "TfidfVectorizer",
+  "experiment_name": "Linear SVM (+TF-IDF)",
+  "cv_mean_f1_macro": 0.9392835142604566,
+  "cv_std_f1_macro": 0.0007597114735056304,
+  "train_f1_macro": 0.9787072080838661,
+  "validation_f1_macro": 0.9878043861399503,
+  "validation_no_overlap_f1_macro": 0.9797177277492105,
+  "validation_overlap_percentage": 51.7,
+  "validation_no_overlap_size": 483,
+  "train_time_sec": 7.291338288001498,
+  "eval_time_sec": 0.029932389999885345,
+  "seed": 1,
+  "labels": {
+    "0": "Negative",
+    "1": "Positive",
+    "2": "Neutral",
+    "3": "Irrelevant"
+  },
+  "created_at": "2026-07-26T18:23:43"
+}
