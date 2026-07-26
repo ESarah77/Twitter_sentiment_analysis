@@ -10,8 +10,8 @@
   "validation_no_overlap_f1_macro": 0.9797177277492105,
   "validation_overlap_percentage": 51.7,
   "validation_no_overlap_size": 483,
-  "train_time_sec": 7.291338288001498,
-  "eval_time_sec": 0.029932389999885345,
+  "train_time_sec": 7.6928086199986865,
+  "eval_time_sec": 0.032324570000128006,
   "seed": 1,
   "labels": {
     "0": "Negative",
@@ -19,5 +19,5 @@
     "2": "Neutral",
     "3": "Irrelevant"
   },
-  "created_at": "2026-07-26T18:23:43"
+  "created_at": "2026-07-26T19:01:25"
 }
