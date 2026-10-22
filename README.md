@@ -1,12 +1,12 @@
 # Twitter Sentiment Analysis
 
-An end-to-end Machine Learning engineering project: from rigorous experimentation on tweet sentiment classification to a reproducible training pipeline and a packaged REST API served with FastAPI and Docker.
+A reproducible Machine Learning project: from rigorous experimentation on tweet sentiment classification to a reproducible training pipeline and a REST API built with FastAPI and containerized with Docker.
 
-This repository demonstrates a complete, production-minded ML workflow rather than a single notebook prototype:
+This repository goes beyond a single notebook prototype:
 - **clean, modular Python code** structured as an installable package;
 - **rigorous experimentation** with stratified cross-validation, explicit train/validation discipline, and a data-leakage check;
 - **reproducible results** through pinned dependencies and a fixed seed;
-- **model persistence and deployment** through a documented FastAPI API and a Docker image.
+- **model persistence and serving** through a documented FastAPI API and a Docker image.
 
 The final model — **TF-IDF (unigrams + bigrams) + LinearSVC** — is intentionally a strong, simple, explainable baseline. It was selected after comparing several preprocessing and modeling configurations, and its performance is close to the practical ceiling on this task for linear TF-IDF representations.
 
@@ -45,12 +45,12 @@ The final model — **TF-IDF (unigrams + bigrams) + LinearSVC** — is intention
 
 This project builds a **multi-class sentiment classifier** on tweets — `Positive`, `Negative`, `Neutral`, `Irrelevant` — using **TF-IDF features** and a **linear model** (`LinearSVC`), selected through stratified cross-validation.
 
-It is structured as a small but complete ML system, not just a notebook:
+It is structured as a small, modular ML project rather than a single notebook:
 
 - a modular `sentiment_analysis` Python package, reusable across the notebook, training script, CLI, and API;
 - an experimentation notebook that documents every modeling decision (missing-value strategy, class weighting, preprocessing, model choice) with a consistent evaluation protocol;
 - a saved, versioned pipeline serialized with `joblib` and served through a **FastAPI** application exposing `/predict` and `/health`, with an interactive Swagger UI;
-- a **Docker** setup for reproducible deployment.
+- a **Docker** setup for a reproducible runtime environment.
 
 Only the tweet text is used as model input. The `entity` column is kept for analysis and error inspection but is **not** used as a feature, to keep the model focused on text-based sentiment classification and the design choices easy to justify.
 
@@ -207,7 +207,7 @@ Development (with auto-reload):
 uv run uvicorn sentiment_analysis.api:app --reload --app-dir src
 ```
 
-Production:
+Standard run (without auto-reload):
 
 ```bash
 uv run uvicorn sentiment_analysis.api:app --host 0.0.0.0 --port 8000
@@ -221,7 +221,7 @@ Then open:
 Example request:
 
 ```bash
-curl -X POST "[localhost](http://localhost:8000/predict)" \
+curl -X POST "http://localhost:8000/predict" \
   -H "Content-Type: application/json" \
   -d '{"texts": "I absolutely love the new design"}'
 ```
@@ -295,7 +295,7 @@ Each experiment reuses shared utility functions for cross-validation and evaluat
 
 `LinearSVC` with TF-IDF (unigrams + bigrams) and `class_weight="balanced"` was selected because it gave the best cross-validation macro F1 while remaining fast and explainable.
 
-Although `LinearSVC` does not output calibrated probabilities (unlike Logistic Regression), it is significantly stronger on this task and was therefore kept as the production model.
+Although `LinearSVC` does not output calibrated probabilities (unlike Logistic Regression), it is significantly stronger on this task and was therefore kept as the final model.
 
 ---
 
@@ -306,6 +306,7 @@ Although `LinearSVC` does not output calibrated probabilities (unlike Logistic R
 - **Linear model.** Performance is close to the ceiling achievable on this task with simple TF-IDF representations. Embedding-based approaches (GloVe, fine-tuned BERT) were explored during development but dropped because the marginal expected gain (~0.01 macro F1) did not justify the added complexity for this project.
 - **No calibrated probabilities.** `LinearSVC` does not natively output probabilities. If confidence scores are needed (e.g. for downstream business logic), wrapping it with `CalibratedClassifierCV` would be a natural extension.
 - **Single language.** The dataset is English; the model is not expected to generalize to other languages without additional data.
+- **No cloud deployment.** The API runs locally or in a Docker container; it is not hosted in the cloud, and there is no CI/CD, authentication, or monitoring.
 
 ---
 
